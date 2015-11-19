@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+
+<style>
+
+body {
+    background-image: url("back.jpg");}
+
+
+#pos1{
+  position: absolute;
+  left: 200;
+  top: 300;
+}
+
+#pos4{
+   margin: 25px;
+}
+#pos5{
+   margin: 25px;
+}
+
+#pos6{
+   margin: 25px;
+}
+
+#pos7{
+   margin: 25px;
+}
+
+
+#rec1 {
+    background-color: lightgrey;
+    width: 190px;
+    padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;
+   
+}
+
+#rec2 {
+    background-color: lightgrey;
+    width: 190px;
+    padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;
+   
+}
+
+
+#rec3 {
+    background-color: lightgrey;
+    width: 190px;
+    padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;
+   
+}
+
+
+
+</style>
+<script>
+
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('txt').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+	
+	var d = new Date();
+var s= new Date();
+var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+document.getElementById("demo1").innerHTML = d.getDate() +"/"+  days[d.getDay()] +"/"+ d.getFullYear();
+
+	
+	
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+window.myApp = this.angular.module('myApp', []);
+
+
+myApp.controller('MyCtrl', function($scope,$http) {
+    var dates = [];
+	$http.get('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22islamabad%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys').success(function(data) {
+			
+		txt = data.query.results.channel.item.condition.temp + " " + data.query.results.channel.item.condition.text;
+		console.log(txt);
+		
+		
+		document.getElementById("demo2").innerHTML =txt;
+		var d = new Date();
+		var cdate = d.getDate();
+		
+		console.log(cdate);
+		
+		
+	});
+	
+	
+  return $scope.dates = dates;
+});
+
+
+</script>
+</head>
+
+<body onload="startTime()">
+
+
+<a href="weather.html">
+<p id="demo2" style= "position:absolute; top:340px; left:1000px; color: red; font-size: 210%;" > <p>
+</a>
+
+<div ng-app="myApp">
+
+<div ng-controller="MyCtrl">
+
+
+<div id="pos1" style= "position:absolute; top:80px; left:500px; color: red; font-size: 350%;font-family: Arial, Helvetica, sans-serif;"> My DashBoard</div>
+
+<a href="clockpg1.html">
+<div id="rec1"style= "position:absolute; top:315px; left:500px;z-index: -1;"></div>
+</a>
+
+<a href="calender.html">
+<div id="rec2"style= "position:absolute; top:315px; left:110px;z-index: -1;"></div>
+</a>
+
+<a href="weather.html">
+<div id="rec3"style= "position:absolute; top:315px; left:900px;z-index: -1;"></div>
+</a>
+
+
+<a href="calender.html">
+<div id="demo1"   style= "position:absolute; top:379px; left:177px; color: red; font-size: 175%;"></div>
+</a>
+
+<a href="clockpg1.html">
+<div id="txt" style= "position:absolute; top:367px; left:580px; color: red; font-size: 280%;"></div>
+</a>
+
+<a href="calender.html">
+<div id="pos4" style= "position:absolute; top:315px; left:230px; color: green; font-size: 130%;" > Date </div>
+</a>
+
+<a href="clockpg1.html">
+<div id="pos5" style= "position:absolute; top:315px; left:620px; color: green; font-size: 130%;" > Time </div>
+</a>
+
+<a href="weather.html">
+<div id="pos6" style= "position:absolute; top:315px; left:1000px; color: green; font-size: 130%;" > Weather </div>
+</a>
+
+<div id="pos7" style= "position:absolute; top:450px; left:160px; color: green; font-size: 130%;" > (Click for more details) </div>
+
+</body>
+</html>

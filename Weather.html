@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+
+
+
+
+<style>
+
+body{
+  padding:0;
+  margin:0;
+  background: white;
+  
+  
+}
+
+#btn {
+  background: #292626;
+  background-image: -webkit-linear-gradient(top, #292626, #f5203c);
+  background-image: -moz-linear-gradient(top, #292626, #f5203c);
+  background-image: -ms-linear-gradient(top, #292626, #f5203c);
+  background-image: -o-linear-gradient(top, #292626, #f5203c);
+  background-image: linear-gradient(to bottom, #292626, #f5203c);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  height: 15px;
+   width: 35px;
+   z-index: 100;
+}
+
+#btn:hover {
+  background: #3cfc3c;
+  background-image: -webkit-linear-gradient(top, #3cfc3c, #080808);
+  background-image: -moz-linear-gradient(top, #3cfc3c, #080808);
+  background-image: -ms-linear-gradient(top, #3cfc3c, #080808);
+  background-image: -o-linear-gradient(top, #3cfc3c, #080808);
+  background-image: linear-gradient(to bottom, #3cfc3c, #080808);
+  text-decoration: none;
+}
+
+
+
+
+#pos2{
+  position: absolute;
+  left: 400;
+  top: 133;
+  font-size: 250%;
+  color: red;
+}
+
+
+
+
+
+
+
+
+
+
+p.serif {
+    font-family: "Times New Roman", Times, serif;
+}
+
+p.sansserif {
+    font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+<script>
+
+
+
+window.myApp = this.angular.module('myApp', []);
+
+
+
+myApp.controller('MyCtrl', function($scope,$http) {
+    var dates = [];
+	$http.get('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22islamabad%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys').success(function(data) {
+			
+		txt = data.query.results.channel.item.condition.temp + " " + data.query.results.channel.item.condition.text;
+		console.log(txt);
+		
+		
+		document.getElementById("demo2").innerHTML =txt;
+		var d = new Date();
+		var cdate = d.getDate();
+		
+		console.log(cdate);
+		
+		
+	});
+	
+	
+  return $scope.dates = dates;
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+
+
+
+<p id="demo2" style= "position:absolute; top:160px; left:350px; color: red; font-size: 190%;"> <p>
+
+<div ng-app="myApp">
+
+<div ng-controller="MyCtrl">
+
+
+
+
+
+<div id="pos1" style= "position:absolute; top:270px; left:350px;">
+<img src="http://images.weathercity.com/banners/s00006198.style-a.png" alt="Islamabad, Islamabad, Pakistan Weather Forecast" border="0">
+</div>
+
+
+<div id="pos2" style= "position:absolute; top:20px; left:300px; color: purple; font-size: 200%;" >
+Islamabads weather forecast </div>
+
+
+
+
+
+
+
+<a href="HOMEPAGE.html">
+<div id="btn" style= "position:absolute; top:560px; left:920px;">
+ <b>Home<b>
+</div>
+
+</body>
+</html>
